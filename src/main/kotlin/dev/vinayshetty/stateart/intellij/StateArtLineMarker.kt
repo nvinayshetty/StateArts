@@ -1,19 +1,49 @@
 package dev.vinayshetty.stateart.intellij
 
+import com.intellij.codeHighlighting.Pass
+import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
+import com.intellij.openapi.editor.markup.GutterIconRenderer
+import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiElement
+import com.intellij.psi.impl.source.tree.LeafPsiElement
+import com.intellij.util.Function
+import org.jetbrains.kotlin.lexer.KtTokens
+import org.jetbrains.kotlin.psi.KtProperty
+import java.awt.event.MouseEvent
 
-class StateArtLineMarker: LineMarkerProvider {
+class StateArtLineMarker : LineMarkerProvider {
 
-    override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getLineMarkerInfo(psiElement: PsiElement): LineMarkerInfo<*>? {
+        if (isStateMachineIdentifier(psiElement)) {
+            return LineMarkerInfo<PsiElement>(
+                psiElement,
+                psiElement.textRange,
+                icon,
+                Pass.LINE_MARKERS,
+                Function { "State Art" },
+                GutterIconNavigationHandler<PsiElement?> { mouseEvent: MouseEvent, psiElement: PsiElement? -> },
+                GutterIconRenderer.Alignment.CENTER
+            )
+        }
+        return null
+    }
+
+    private fun isStateMachineIdentifier(psiElement: PsiElement): Boolean {
+        return (psiElement as? LeafPsiElement)?.elementType == KtTokens.IDENTIFIER
+                && psiElement.parent is KtProperty
+                && psiElement.parent.text.matches(stateMachineRegex)
     }
 
     override fun collectSlowLineMarkers(
         elements: MutableList<PsiElement>,
         result: MutableCollection<LineMarkerInfo<PsiElement>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    companion object {
+        private val icon = IconLoader.getIcon("/icons/stateart.png")
+        private val stateMachineRegex = "(?s).*StateMachine[\\s]*.[\\s]*create\\<(?s).*".toRegex()
     }
 }

@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.vinayshetty.stateart</id>
     <name>State Art</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="nvinayshetty@gmail.com" url="https://github.com/nvinayshetty/StateArts">Vinay Shetty</vendor>
 
     <description><![CDATA[Generates State machine diagram from State Machine.<br>
     <em>The Art Of State</em>
@@ -12,9 +12,10 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
+    <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+       <codeInsight.lineMarkerProvider language="kotlin" implementationClass="dev.vinayshetty.stateart.intellij.StateArtLineMarker"/>
     </extensions>
 
     <actions>

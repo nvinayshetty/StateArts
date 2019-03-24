@@ -1,6 +1,6 @@
 package dev.vinayshetty.stateart.parser
 
-import dev.vinayshetty.stateart.builder.StateMachineBuilder
+import dev.vinayshetty.stateart.statemachinebuilder.StateMachineBuilder
 import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat

@@ -1,4 +1,4 @@
-package dev.vinayshetty.stateart.builder
+package dev.vinayshetty.stateart.statemachinebuilder
 
 import dev.vinayshetty.stateart.datastructure.StateMachine
 

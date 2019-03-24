@@ -1,5 +1,7 @@
 package dev.vinayshetty.stateart.builder
 
+import dev.vinayshetty.stateart.statemachinebuilder.StateMachineBuilder
+import dev.vinayshetty.stateart.statemachinebuilder.StateMachineBuilderImpl
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.BeforeEach

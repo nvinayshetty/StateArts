@@ -1,6 +1,6 @@
 package dev.vinayshetty.stateart.parser
 
-import dev.vinayshetty.stateart.builder.StateMachineBuilder
+import dev.vinayshetty.stateart.statemachinebuilder.StateMachineBuilder
 import dev.vinayshetty.stateart.datastructure.StateMachine
 import dev.vinayshetty.stateart.lexer.StateMachineTokenizer
 

@@ -9,6 +9,8 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.Function
+import dev.vinayshetty.stateart.parser.StateMachineParser
+import dev.vinayshetty.stateart.statemachinebuilder.StateMachineBuilderImpl
 import org.jetbrains.kotlin.lexer.KtTokens
 import org.jetbrains.kotlin.psi.KtProperty
 import java.awt.event.MouseEvent
@@ -23,11 +25,22 @@ class StateArtLineMarker : LineMarkerProvider {
                 icon,
                 Pass.LINE_MARKERS,
                 Function { "State Art" },
-                GutterIconNavigationHandler<PsiElement?> { mouseEvent: MouseEvent, psiElement: PsiElement? -> },
+                GutterIconNavigationHandler<PsiElement?> { mouseEvent: MouseEvent, psiElement: PsiElement? ->
+                    writeDotFile(psiElement)
+                },
                 GutterIconRenderer.Alignment.CENTER
             )
         }
         return null
+    }
+
+    private fun writeDotFile(psiElement: PsiElement?) {
+        psiElement?.let {
+            val stateMachineText = psiElement.parent.text
+            val stateMachineName = psiElement.text
+            val stateMachineBuilder = StateMachineBuilderImpl()
+            val stateMachineTokenizer = StateMachineParser(stateMachineBuilder)
+        }
     }
 
     private fun isStateMachineIdentifier(psiElement: PsiElement): Boolean {

@@ -75,3 +75,4 @@ out/
 /.gradle/
 !/.idea/misc.xml
 /.idea/sbt.xml
+/gradle.properties

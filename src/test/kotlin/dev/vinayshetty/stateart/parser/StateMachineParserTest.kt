@@ -137,7 +137,7 @@ internal class StateMachineParserTest {
 
     @Test
     fun `A Transition after previous doNotTransition throws exception `() {
-        val exception = assertThrows<StateMachineParserException> {
+        assertThrows<StateMachineParserException> {
             stateMachineParser.state("liquid")
             stateMachineParser.event("vaporize")
             stateMachineParser.doNotTransition()

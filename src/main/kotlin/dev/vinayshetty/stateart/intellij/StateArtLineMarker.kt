@@ -4,6 +4,8 @@ import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
+import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.execution.process.OSProcessHandler
 import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.util.IconLoader
@@ -19,7 +21,7 @@ import org.jetbrains.kotlin.lexer.KtTokens
 import org.jetbrains.kotlin.psi.KtProperty
 import java.awt.event.MouseEvent
 import java.io.File
-
+import java.nio.charset.Charset
 
 class StateArtLineMarker : LineMarkerProvider {
 
@@ -58,18 +60,44 @@ class StateArtLineMarker : LineMarkerProvider {
                 val artsFolderPath = "$basepath/arts"
                 File(statesFolderPath).mkdirs()
                 File(artsFolderPath).mkdirs()
-                File("$statesFolderPath/$stateMachineName.dot").printWriter().use { file ->
-                    file.print(stateMachineDotString)
-                    Runtime.getRuntime()
-                        .exec("dot -Tpng $statesFolderPath/$stateMachineName.dot -o $artsFolderPath/$stateMachineName.png")
-                    LocalFileSystem.getInstance().refresh(true)
-                    val path =
-                        LocalFileSystem.getInstance().refreshAndFindFileByPath("$artsFolderPath/$stateMachineName.png")
-                    path?.let {
-                        FileEditorManager.getInstance(project).openFile(it, true, true)
-                    }
+                File("$statesFolderPath/$stateMachineName.dot").printWriter()
+                    .use { file -> file.print(stateMachineDotString) }
+
+
+                val generalCommandLine = GeneralCommandLine()
+                generalCommandLine.charset = Charset.forName("UTF-8")
+                generalCommandLine.setWorkDirectory(project.basePath)
+                generalCommandLine.exePath = getExePath()
+                generalCommandLine.withParentEnvironmentType(GeneralCommandLine.ParentEnvironmentType.SYSTEM)
+                generalCommandLine.withEnvironment(System.getenv())
+                generalCommandLine.addParameter("dot")
+                generalCommandLine.addParameter("-Tpng")
+                generalCommandLine.addParameter("$statesFolderPath/$stateMachineName.dot")
+                generalCommandLine.addParameter("-o")
+                generalCommandLine.addParameter("$artsFolderPath/$stateMachineName.png")
+
+                val processHandler = OSProcessHandler(generalCommandLine)
+                processHandler.startNotify()
+
+                LocalFileSystem.getInstance().refresh(true)
+                val path =
+                    LocalFileSystem.getInstance().refreshAndFindFileByPath("$artsFolderPath/$stateMachineName.png")
+                path?.let {
+                    FileEditorManager.getInstance(project).openFile(it, true, true)
                 }
             }
+        }
+    }
+
+    private fun getExePath(): String {
+        val os = System.getProperty("os.name").toLowerCase()
+        return if (os.contains("win")) {
+            "c:/Program Files (x86)/Graphviz 2.28/bin/dot.exe"
+        } else if (os.contains("mac")) {
+            "/usr/local/bin/dot"
+        } else {
+            //consider Linux based
+            "/usr/bin/dot"
         }
     }
 

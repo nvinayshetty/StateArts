@@ -1,4 +1,5 @@
 # StateArts
+<img src="https://github.com/nvinayshetty/StateArts/blob/master/gifs/s.png"/>
 Intellij plugin that creates state machine diagram from state machine. The Art of states
 
 <H3>State machine line marker</H3>

@@ -3,15 +3,21 @@
     <name>State Art</name>
     <vendor email="nvinayshetty@gmail.com" url="https://github.com/nvinayshetty/StateArts">Vinay Shetty</vendor>
 
-    <description><![CDATA[Generates State machine diagram from State Machine.<br>
-    <em>The Art Of State</em>
+    <description><![CDATA[
+      Generates State machine diagram from <a href="https://github.com/Tinder/StateMachine"> State Machine </a><br>
+      <em>This plugin works based on a command line tool called <a href="https://graphviz.gitlab.io/about/">Graphviz</a>. Make sure you have Graphviz installed in your path</em><br>
+      <em>This is a open source project please raise a feature request or file a bug if any, at <a href="https://github.com/nvinayshetty/StateArts"> repository</a>  looking forward for your feedBack </em>
     ]]></description>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
+    <change-notes><![CDATA[
+           <ul>V 0.4
+            <li>Adds line markers to State Machine </li>
+            <li>Visualize State diagram in a Click </li>
+        </ul>
+    ]]>
+    </change-notes>
+    
     <depends>com.intellij.modules.lang</depends>
-    -->
     <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -21,4 +27,7 @@
     <actions>
         <!-- Add your actions here -->
     </actions>
+    <version>0.4</version>
+    <idea-version since-build="171"/>
+
 </idea-plugin>

@@ -59,6 +59,8 @@ class StateMachineParser(private val stateMachineBuilder: StateMachineBuilder) :
                 }
                 is ParserEvents.Transition -> {
                     when (previousEvent) {
+                        is ParserEvents.Transition,
+                        is ParserEvents.NoTransition,
                         is ParserEvents.Event -> stateMachineBuilder.addTransitionToState(currentEvent.nextState)
                         else -> {
                             val message =
@@ -69,6 +71,8 @@ class StateMachineParser(private val stateMachineBuilder: StateMachineBuilder) :
                 }
                 is ParserEvents.NoTransition -> {
                     when (previousEvent) {
+                        is ParserEvents.Transition,
+                        is ParserEvents.NoTransition,
                         is ParserEvents.Event -> stateMachineBuilder.addNoTransition()
                         else -> {
                             val message =

@@ -96,6 +96,45 @@ internal class StateMachineParserTest {
         orderVerifier.verify(stateMachineBuilder).addEvent("boil")
     }
 
+
+    @Test
+    fun `some Event can occur after previous  State, Transition or NoTransition`() {
+        val orderVerifier = Mockito.inOrder(stateMachineBuilder)
+        stateMachineParser.state("Locked")
+        stateMachineParser.event("InsertCoin")
+        stateMachineParser.transition("Unlocked")
+        stateMachineParser.transition("Locked")
+        stateMachineParser.event("AdmitPerson")
+        stateMachineParser.doNotTransition()
+        stateMachineParser.event("MachineDidFail")
+        stateMachineParser.transition("Broken")
+        stateMachineParser.state("Unlocked")
+        stateMachineParser.event("AdmitPerson")
+        stateMachineParser.transition("Locked")
+        stateMachineParser.state("Broken")
+        stateMachineParser.event("MachineRepairDidComplete")
+        stateMachineParser.transition("oldState")
+
+
+        orderVerifier.verify(stateMachineBuilder).addState("Locked")
+        orderVerifier.verify(stateMachineBuilder).addEvent("InsertCoin")
+        orderVerifier.verify(stateMachineBuilder).addTransitionToState("Unlocked")
+        orderVerifier.verify(stateMachineBuilder).addTransitionToState("Locked")
+        orderVerifier.verify(stateMachineBuilder).addEvent("AdmitPerson")
+        orderVerifier.verify(stateMachineBuilder).addNoTransition()
+        orderVerifier.verify(stateMachineBuilder).addEvent("MachineDidFail")
+        orderVerifier.verify(stateMachineBuilder).addTransitionToState("Broken")
+        orderVerifier.verify(stateMachineBuilder).addState("Unlocked")
+        orderVerifier.verify(stateMachineBuilder).addEvent("AdmitPerson")
+        orderVerifier.verify(stateMachineBuilder).addTransitionToState("Locked")
+        orderVerifier.verify(stateMachineBuilder).addState("Broken")
+        orderVerifier.verify(stateMachineBuilder).addEvent("MachineRepairDidComplete")
+        orderVerifier.verify(stateMachineBuilder).addTransitionToState("oldState")
+
+    }
+
+
+
     @Test
     fun `a Transition can occur only after an event`() {
         val orderVerifier = Mockito.inOrder(stateMachineBuilder)

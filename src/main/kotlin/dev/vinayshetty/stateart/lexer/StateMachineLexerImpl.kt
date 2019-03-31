@@ -4,9 +4,9 @@ import dev.vinayshetty.stateart.datastructure.StateMachine
 
 class StateMachineLexerImpl(private val stateMachineTokenizer: StateMachineTokenizer) : StateMachineLexer {
     private companion object {
-        private val stateMatcherRegex = ".*state\\<(.*?)\\>.*".toRegex()
-        private val eventMatcherRegex = ".*on\\<(.*?)\\>.*".toRegex()
-        private val transitionToMatcherRegex = ".*transitionTo\\((.*?),.*".toRegex()
+        private val stateMatcherRegex = ".*state(\\<|\\()(.*?)(\\>|\\)).*".toRegex()
+        private val eventMatcherRegex = ".*\\s+on(\\<|\\()(.*?)(\\>|\\)).*".toRegex()
+        private val transitionToMatcherRegex = ".*transitionTo\\((.*?)(,|\\)).*".toRegex()
         private val doNotTransitionMatcherRegex = ".*dontTransition\\((.*?)\\).*".toRegex()
     }
 
@@ -19,16 +19,22 @@ class StateMachineLexerImpl(private val stateMachineTokenizer: StateMachineToken
         if (line.matches(stateMatcherRegex)) {
             val matchResult = stateMatcherRegex.find(line)
             matchResult?.let {
-                val (state) = it.destructured
+                val (_, state, _) = it.destructured
                 val shortName = shortenName(state)
                 stateMachineTokenizer.state(shortName)
             }
 
         }
+        if (line.matches(doNotTransitionMatcherRegex)) {
+            val matchResult = doNotTransitionMatcherRegex.find(line)
+            matchResult?.let {
+                stateMachineTokenizer.doNotTransition()
+            }
+        }
         if (line.matches(eventMatcherRegex)) {
             val matchResult = eventMatcherRegex.find(line)
             matchResult?.let {
-                val (event) = it.destructured
+                val (_, event, _) = it.destructured
                 val shortName = shortenName(event)
                 stateMachineTokenizer.event(shortName)
             }
@@ -41,12 +47,7 @@ class StateMachineLexerImpl(private val stateMachineTokenizer: StateMachineToken
                 stateMachineTokenizer.transition(shortName)
             }
         }
-        if (line.matches(doNotTransitionMatcherRegex)) {
-            val matchResult = doNotTransitionMatcherRegex.find(line)
-            matchResult?.let {
-                stateMachineTokenizer.doNotTransition()
-            }
-        }
+
     }
 
     private fun shortenName(name: String): String {

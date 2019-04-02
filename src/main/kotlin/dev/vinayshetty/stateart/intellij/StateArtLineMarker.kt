@@ -92,7 +92,7 @@ class StateArtLineMarker : LineMarkerProvider {
     private fun getExePath(): String {
         val os = System.getProperty("os.name").toLowerCase()
         return if (os.contains("win")) {
-            "c:/Program Files (x86)/Graphviz 2.28/bin/dot.exe"
+            "c:/Program Files (x86)/Graphviz 2.38/bin/dot.exe"
         } else if (os.contains("mac")) {
             "/usr/local/bin/dot"
         } else {

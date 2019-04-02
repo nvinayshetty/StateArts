@@ -32,8 +32,7 @@ Create state diagram in a click
 
 FAQ:</br>
 
-1.How can I help?
-
+1. How can I help?
 * Keep the  :star: shining and spirit high: Add your review and ratings at [Intellij plugin repository](https://plugins.jetbrains.com/plugin/12193-state-art)
 * Submit PR
 * Crete feature requests/ report issues

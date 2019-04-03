@@ -188,11 +188,11 @@ internal class StateMachineLexerImplTest {
                     if (newCredit >= FARE_PRICE) {
                         transitionTo(State.Unlocked, Command.OpenDoors)
                     } else {
-                        transitionTo(State.Locked(newCredit))
+                        transitionTo(State.Locked(newCredit.amount))
                     }
                 }
                 on<Event.AdmitPerson> {
-                    dontTransition(Command.SoundAlarm)
+                    dontTransition(Command)
                 }
                 on<Event.MachineDidFail> {
                     transitionTo(State.Broken(this), Command.OrderRepair)
@@ -200,7 +200,7 @@ internal class StateMachineLexerImplTest {
             }
             state<State.Unlocked> {
                 on<Event.AdmitPerson> {
-                    transitionTo(State.Locked(credit = 0), Command.CloseDoors)
+                    transitionTo(StateLocked(credit = 0), Command.CloseDoors)
                 }
             }
             state<State.Broken> {
@@ -270,11 +270,5 @@ internal class StateMachineLexerImplTest {
         stateMachineorderVerifier.verify(stateMachineTokenizer).event("EVENT_3")
         stateMachineorderVerifier.verify(stateMachineTokenizer).transition("STATE_C")
         stateMachineorderVerifier.verify(stateMachineTokenizer).state("STATE_C")
-
-
-
-
-
-
     }
 }

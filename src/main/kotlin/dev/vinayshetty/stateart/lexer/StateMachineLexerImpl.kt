@@ -51,14 +51,15 @@ class StateMachineLexerImpl(private val stateMachineTokenizer: StateMachineToken
     }
 
     private fun shortenName(name: String): String {
-        return if (!name.contains("."))
-            return name
-        else {
-            val simpleName = name.split(".").last()
-            if (simpleName.contains("(")) {
-                return simpleName.split("(").first()
-            } else simpleName
+        return when {
+            name.contains("(") -> {
+                val nameWithoutBraces = name.split("(").first()
+                return nameWithoutBraces.split(".").last()
+            }
+            name.contains(".") -> return name.split(".").last()
+            else -> name
         }
+
 
     }
 }

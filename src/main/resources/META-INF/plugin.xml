@@ -13,7 +13,11 @@
            <ul>V 0.4
             <li>Adds line markers to State Machine </li>
             <li>Visualize State diagram in a Click </li>
-        </ul>
+            </ul>
+             <ul>V 0.5
+            <li>Update graphviz version for windows </li>
+            <li>bug fixes </li>
+            </ul>
     ]]>
     </change-notes>
     
@@ -27,7 +31,7 @@
     <actions>
         <!-- Add your actions here -->
     </actions>
-    <version>0.4</version>
+    <version>0.5</version>
     <idea-version since-build="171"/>
 
 </idea-plugin>

@@ -35,7 +35,7 @@ FAQ:</br>
 1. How can I help?
 * Keep the  :star: shining and spirit high: Add your review and ratings at [Intellij plugin repository](https://plugins.jetbrains.com/plugin/12193-state-art)
 * Submit PR
-* Crete feature requests/ report issues
+* Create feature requests/ report issues
 
 2. How to make sure graphviz is properly installed?</br>
 Run `dot -V` from your termninal you should see some output which looks similar to this</br>

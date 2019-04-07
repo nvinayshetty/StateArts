@@ -30,6 +30,10 @@ Create state diagram in a click
 <H3>State and Arts</H3>
 <img src="https://github.com/nvinayshetty/StateArts/blob/master/gifs/stateart.gif" width="1000" height="600" />
 
+<H3>How it works?</H3>
+Here is a detailed [Medium Post](https://medium.com/@nvinayshetty/introducing-state-art-96e125b8bf5f)
+
+
 FAQ:</br>
 
 1. How can I help?
